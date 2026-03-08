@@ -34,10 +34,6 @@ const userSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Index for fast lookups
-userSchema.index({ phone: 1 });
-userSchema.index({ firebaseUid: 1 });
-
 userSchema.methods.toPublicJSON = function () {
   return {
     _id: this._id,
