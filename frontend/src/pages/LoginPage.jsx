@@ -5,6 +5,8 @@ import { toast } from 'react-hot-toast'
 import { FiMapPin, FiPhone, FiArrowRight, FiShield } from 'react-icons/fi'
 import { setupRecaptcha, sendOTP } from '../services/firebase'
 import { loginUser } from '../redux/slices/authSlice'
+import bg from "../assets/bg1.jpg"
+import { motion } from "framer-motion"
 
 export default function LoginPage() {
   const [step, setStep] = useState('phone') // 'phone' | 'otp'
@@ -94,152 +96,151 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-blue-50 flex">
-      {/* Left panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-brand-700 flex-col justify-center px-16 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-56 h-56 bg-brand-300 rounded-full blur-3xl" />
+  <div
+    className="min-h-screen flex items-center justify-center relative bg-cover bg-center"
+    style={{ backgroundImage: `url(${bg})` }}
+  >
+
+    {/* Dark overlay */}
+    <div className="absolute inset-0 bg-black/60"></div>
+
+    <div className="relative z-10 flex w-full max-w-6xl rounded-3xl overflow-hidden shadow-2xl">
+
+      {/* LEFT SIDE (Info Panel) */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center p-12 text-white bg-gradient-to-br from-blue-700/80 to-indigo-900/80 backdrop-blur">
+
+        <div className="flex items-center gap-3 mb-8">
+          <FiMapPin className="text-3xl" />
+          <h1 className="text-3xl font-bold">HelpCity</h1>
         </div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-12">
-            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-              <FiMapPin className="text-white text-xl" />
+
+        <h2 className="text-4xl font-bold leading-snug mb-6">
+          Report civic issues <br />
+          and build better cities
+        </h2>
+
+        <p className="text-blue-100 mb-10">
+          Join thousands of citizens improving their city by reporting
+          potholes, garbage overflow, broken streetlights and more.
+        </p>
+
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { icon: "🛣️", label: "Road Issues", count: "2.4k" },
+            { icon: "💧", label: "Water Problems", count: "1.8k" },
+            { icon: "⚡", label: "Power Issues", count: "956" },
+            { icon: "🗑️", label: "Garbage Reports", count: "3.1k" }
+          ].map((item) => (
+            <div
+              key={item.label}
+className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition hover:scale-105 hover:bg-white/20"            >
+              <div className="text-2xl">{item.icon}</div>
+              <div className="text-sm font-semibold">{item.label}</div>
+              <div className="text-xs text-blue-200">{item.count} reported</div>
             </div>
-            <span className="font-display font-bold text-2xl text-white">HelpCity</span>
-          </div>
-          <h1 className="font-display font-bold text-4xl text-white leading-tight mb-6">
-            Report civic issues,<br />
-            <span className="text-brand-200">build better cities.</span>
-          </h1>
-          <p className="text-brand-200 text-lg leading-relaxed mb-10">
-            Join thousands of citizens making a difference. Report potholes, garbage overflow, broken streetlights, and more.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { icon: '🛣️', label: 'Road Issues', count: '2.4k' },
-              { icon: '💧', label: 'Water Problems', count: '1.8k' },
-              { icon: '⚡', label: 'Power Issues', count: '956' },
-              { icon: '🗑️', label: 'Garbage Reports', count: '3.1k' },
-            ].map(item => (
-              <div key={item.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="text-2xl mb-1">{item.icon}</div>
-                <div className="text-white font-semibold text-sm">{item.label}</div>
-                <div className="text-brand-200 text-xs">{item.count} reported</div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
-          {/* Logo (mobile) */}
-          <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
-              <FiMapPin className="text-white" />
-            </div>
-            <span className="font-display font-bold text-xl text-gray-900">Help<span className="text-brand-600">City</span></span>
-          </div>
 
-          {step === 'phone' ? (
-            <div className="animate-slide-up">
-              <h2 className="font-display font-bold text-2xl text-gray-900 mb-2">Sign in with phone</h2>
-              <p className="text-gray-500 text-sm mb-8">We'll send an OTP to verify your number</p>
+      {/* RIGHT SIDE (Login Card) */}
+      <div className="flex-1 flex items-center justify-center bg-white/95 p-10">
 
-              <form onSubmit={handleSendOTP} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
-                  <div className="relative">
-                    <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center gap-2 text-gray-400">
-                      <FiPhone size={16} />
-                      <span className="text-sm">+91</span>
-                      <div className="w-px h-5 bg-gray-200" />
-                    </div>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                      placeholder="10-digit mobile number"
-                      className="input-field pl-24"
-                      maxLength={10}
-                      required
-                    />
+        <div className="w-full max-w-sm">
+
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            Sign in with phone
+          </h2>
+
+          <p className="text-gray-500 text-sm mb-8">
+            We'll send an OTP to verify your number
+          </p>
+
+
+          {step === "phone" ? (
+            <form onSubmit={handleSendOTP} className="space-y-5">
+
+              <div>
+                <label className="text-sm text-gray-600">
+                  Phone Number
+                </label>
+
+                <div className="relative mt-2">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 flex gap-2 items-center">
+                    <FiPhone size={16} />
+                    <span>+91</span>
                   </div>
-                  <p className="text-xs text-gray-400 mt-1">Enter 10-digit number without country code</p>
+
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full border rounded-lg py-3 pl-20 pr-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Enter mobile number"
+                    maxLength={10}
+                  />
                 </div>
+              </div>
 
-                <div id="recaptcha-container" />
+              <div id="recaptcha-container"></div>
 
-                <button type="submit" disabled={loading} className="btn-primary w-full">
-                  {loading ? (
-                    <div className="flex items-center gap-2">
-                      <div className="spinner" />
-                      Sending OTP...
-                    </div>
-                  ) : (
-                    <>Send OTP <FiArrowRight /></>
-                  )}
-                </button>
-              </form>
-            </div>
-          ) : (
-            <div className="animate-slide-up">
               <button
-                onClick={() => setStep('phone')}
-                className="text-sm text-gray-500 hover:text-gray-700 mb-6 flex items-center gap-1"
+                type="submit"
+                disabled={loading}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg flex items-center justify-center gap-2"
               >
-                ← Change number
+                Send OTP <FiArrowRight />
               </button>
-              <h2 className="font-display font-bold text-2xl text-gray-900 mb-2">Enter OTP</h2>
-              <p className="text-gray-500 text-sm mb-8">
-                We sent a 6-digit code to <strong>{formatPhone(phone)}</strong>
-              </p>
 
-              <form onSubmit={handleVerifyOTP} className="space-y-6">
-                <div className="flex gap-3 justify-between">
-                  {otp.map((digit, i) => (
-                    <input
-                      key={i}
-                      ref={el => otpRefs.current[i] = el}
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={1}
-                      value={digit}
-                      onChange={e => handleOtpChange(i, e.target.value)}
-                      onKeyDown={e => handleOtpKeyDown(i, e)}
-                      className="w-12 h-14 text-center text-xl font-bold rounded-xl border-2 border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 outline-none transition-all"
-                    />
-                  ))}
-                </div>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyOTP} className="space-y-6">
 
-                <button type="submit" disabled={loading || authLoading} className="btn-primary w-full">
-                  {(loading || authLoading) ? (
-                    <div className="flex items-center gap-2">
-                      <div className="spinner" />
-                      Verifying...
-                    </div>
-                  ) : (
-                    <><FiShield size={16} /> Verify & Login</>
-                  )}
-                </button>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Enter OTP
+              </h3>
 
-                <p className="text-center text-sm text-gray-500">
-                  Didn't receive OTP?{' '}
-                  <button type="button" onClick={() => setStep('phone')} className="text-brand-600 font-medium">
-                    Resend
-                  </button>
-                </p>
-              </form>
-            </div>
+              <div className="flex justify-between gap-2">
+                {otp.map((digit, i) => (
+                  <input
+                    key={i}
+                    ref={(el) => (otpRefs.current[i] = el)}
+                    type="text"
+                    maxLength="1"
+                    value={digit}
+                    onChange={(e) => handleOtpChange(i, e.target.value)}
+                    onKeyDown={(e) => handleOtpKeyDown(i, e)}
+                    className="w-12 h-14 text-center text-lg border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                ))}
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading || authLoading}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg flex items-center justify-center gap-2"
+              >
+                <FiShield /> Verify & Login
+              </button>
+
+            </form>
           )}
 
-          <p className="mt-8 text-center text-xs text-gray-400">
-            By continuing, you agree to our Terms of Service and Privacy Policy
+          <p className="text-xs text-gray-400 mt-8 text-center">
+            By continuing you agree to our Terms and Privacy Policy
           </p>
+
+          <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+></motion.div>
+
         </div>
       </div>
+
     </div>
+  </div>
   )
 }
+
