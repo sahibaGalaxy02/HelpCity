@@ -1,6 +1,5 @@
 import "./App.css";
 import { Link } from "react-router-dom";
-import CountUp from "react-countup"
 
 export default function HomePage() {
   return (
