@@ -95,29 +95,42 @@ export default function ReportIssuePage() {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const { latitude: lat, longitude: lng } = pos.coords
-        const loader = new Loader({
-          apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
-          version: 'weekly',
-        })
-        const address = await reverseGeocode(lat, lng, loader)
-        setLocation({ lat, lng, address })
-        setLocationLoading(false)
+        const fallbackAddress = `${lat.toFixed(4)}, ${lng.toFixed(4)}`
 
-        if (!mapInstanceRef.current) {
-          await initMap(lat, lng)
-        } else {
-          mapInstanceRef.current.panTo({ lat, lng })
-          if (markerRef.current) markerRef.current.position = { lat, lng }
+        // Commit the detected coordinates right away so a slow reverse-geocode
+        // or map API hiccup doesn't leave the UI stuck in a loading state.
+        setLocation({ lat, lng, address: fallbackAddress })
+
+        try {
+          const loader = new Loader({
+            apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
+            version: 'weekly',
+          })
+
+          const address = await reverseGeocode(lat, lng, loader)
+          setLocation({ lat, lng, address })
+
+          if (!mapInstanceRef.current) {
+            await initMap(lat, lng)
+          } else {
+            mapInstanceRef.current.panTo({ lat, lng })
+            if (markerRef.current) markerRef.current.position = { lat, lng }
+          }
+        } catch (err) {
+          console.error('Location enrichment error:', err)
+        } finally {
+          setLocationLoading(false)
         }
+
         toast.success('Location detected!')
       },
-      (err) => {
+      () => {
         toast.error('Could not detect location. Please click on the map.')
         setLocationLoading(false)
         // Load map with default location (India)
         initMap(19.0760, 72.8777)
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     )
   }
 
@@ -174,7 +187,7 @@ export default function ReportIssuePage() {
       } else {
         toast.error(res.payload || 'Failed to submit issue')
       }
-    } catch (err) {
+    } catch {
       toast.error('Something went wrong')
     } finally {
       setSubmitting(false)
