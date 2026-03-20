@@ -183,9 +183,14 @@ export default function ReportIssuePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-6">
-        <h1 className="font-display font-bold text-2xl text-gray-900">Report a Civic Issue</h1>
-        <p className="text-gray-500 text-sm mt-1">Help improve your city by reporting problems in your area</p>
+      <div className="mb-8 rounded-[1.75rem] border border-white/60 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(239,246,255,0.86),rgba(255,247,237,0.88))] px-6 py-7 shadow-[0_24px_54px_rgba(15,23,42,0.08)] backdrop-blur-xl">
+        <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-700">
+          Guided reporting
+        </div>
+        <h1 className="mt-4 font-display text-3xl font-bold text-slate-900">Report a Civic Issue</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+          Share clear details, add a photo, and pin the location so the right team can act faster.
+        </p>
       </div>
 
       <form onSubmit={handleSubmit}>
