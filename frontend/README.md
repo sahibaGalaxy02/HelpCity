@@ -1,16 +1,123 @@
-# React + Vite
+# frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Version](https://img.shields.io/badge/version-0.0.0-blue)
 
-Currently, two official plugins are available:
+A short description of your project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
+- [Overview](#overview)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
 
-## React Compiler
+## Overview
+A short description of your project.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
+### Prerequisites
+- Node.js 18+
+- npm
 
-## Expanding the ESLint configuration
+### Installation
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Run
+```bash
+npm run build
+```
+
+## Available Scripts
+| Script | Command |
+| --- | --- |
+| `dev` | `npm run dev` |
+| `build` | `npm run build` |
+| `lint` | `npm run lint` |
+| `preview` | `npm run preview` |
+
+## Project Structure
+```text
+.
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── assets/
+│   │   ├── bg1.jpg
+│   │   ├── bg2.jpg
+│   │   ├── bg3.jpg
+│   │   ├── bg4.jpg
+│   │   ├── bg5.png
+│   │   └── react.svg
+│   ├── components/
+│   │   ├── common/
+│   │   └── layout/
+│   ├── pages/
+│   │   ├── AdminDashboard.jsx
+│   │   ├── HomePage.jsx
+│   │   ├── IssueDetailPage.jsx
+│   │   ├── LoginPage.jsx
+│   │   ├── NotFoundPage.jsx
+│   │   ├── ReportIssuePage.jsx
+│   │   └── UserDashboard.jsx
+│   ├── redux/
+│   │   ├── slices/
+│   │   └── store.js
+│   ├── services/
+│   │   ├── api.js
+│   │   └── firebase.js
+│   ├── utils/
+│   │   └── helpers.js
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .env
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+└── vite.config.js
+```
+
+## Dependencies
+- Runtime dependencies: 12
+- Development dependencies: 12
+
+### Runtime
+- `@googlemaps/js-api-loader`
+- `@reduxjs/toolkit`
+- `@tailwindcss/vite`
+- `axios`
+- `firebase`
+- `framer-motion`
+- `react`
+- `react-dom`
+- `react-hot-toast`
+- `react-icons`
+
+### Development
+- `@eslint/js`
+- `@types/react`
+- `@types/react-dom`
+- `@vitejs/plugin-react`
+- `autoprefixer`
+- `eslint`
+- `eslint-plugin-react-hooks`
+- `eslint-plugin-react-refresh`
+- `globals`
+- `postcss`
+
+## Configuration
+- Keywords: _Not specified_
+- Version: 0.0.0
+
+## Contributing
+Contributions are welcome. Please open an issue first to discuss any major change.
+
+## License
+License information is not specified.
