@@ -4,7 +4,8 @@
 ![GitHub Forks](https://img.shields.io/github/forks/sahibaGalaxy02/HelpCity?style=flat-square&color=blue)
 ![License](https://img.shields.io/badge/License-Unspecified-lightgrey.svg)
 
-HelpCity is a full-stack web application designed to help citizens report and track city-related issues efficiently. It provides a platform where users can submit complaints, monitor their status, and improve communication between citizens and authorities.
+HelpCity is a full-stack web application designed to help citizens report and track city-related issues efficiently. It provides a 
+platform where users can submit complaints, monitor their status, and improve communication between citizens and authorities.
 
 ## 🚀 Key Features
 
