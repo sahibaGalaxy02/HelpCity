@@ -22,7 +22,7 @@ platform where users can submit complaints, monitor their status, and improve co
 
 ### Frontend
 
-*   **Languages**: HTML, CSS, JavaScript
+*   **Languages**: HTML, CSS, JavaScript.
 *   **Framework/Library**: React.js
 
 ### Backend
