@@ -118,6 +118,7 @@ export default function IssueCard({ issue, showDelete = false }) {
   )
 }
 
+
 function formatDate(dateStr) {
   if (!dateStr) return ''
   const date = new Date(dateStr)
