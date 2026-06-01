@@ -171,7 +171,7 @@ export default function LoginPage() {
                   </label>
 
                   <div className="relative mt-2">
-                    <div className="absolute left-4 top-1/2 flex -translate-y-1/2 items-center gap-2 text-slate-400">
+                    <div className="pointer-events-none absolute left-4 top-1/2 z-10 flex -translate-y-1/2 items-center gap-2 text-slate-500">
                       <FiPhone size={16} />
                       <span className="font-semibold">+91</span>
                     </div>
@@ -180,7 +180,7 @@ export default function LoginPage() {
                       type="tel"
                       value={phone}
                       onChange={(event) => setPhone(event.target.value)}
-                      className="input-field pl-20"
+                      className="input-field relative z-0 pl-20"
                       placeholder="Enter mobile number"
                       maxLength={10}
                     />

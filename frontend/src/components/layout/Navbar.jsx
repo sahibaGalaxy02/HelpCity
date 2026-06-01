@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { logout } from '../../redux/slices/authSlice'
 import { FiMapPin, FiPlus, FiUser, FiLogOut, FiMenu, FiX, FiShield } from 'react-icons/fi'
 
@@ -11,11 +11,32 @@ export default function Navbar() {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
+  const dropdownButtonRef = useRef(null)
+
+  useEffect(() => {
+    if (!dropdownOpen) return undefined
+
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current?.contains(event.target) ||
+        dropdownButtonRef.current?.contains(event.target)
+      ) {
+        return
+      }
+
+      setDropdownOpen(false)
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [dropdownOpen])
 
   const handleLogout = () => {
     dispatch(logout())
     navigate('/login')
     setMenuOpen(false)
+    setDropdownOpen(false)
   }
 
   const isActive = (path) => location.pathname === path
@@ -63,6 +84,7 @@ export default function Navbar() {
                 </Link>
                 <div className="relative">
                   <button
+                    ref={dropdownButtonRef}
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     className="flex items-center gap-3 rounded-2xl border border-white/50 bg-white/80 px-3 py-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
                   >
@@ -77,7 +99,7 @@ export default function Navbar() {
                     </div>
                   </button>
                   {dropdownOpen && (
-                    <div className="glass-panel absolute right-0 mt-3 w-52 rounded-2xl border border-white/60 py-2 z-50">
+                    <div ref={dropdownRef} className="glass-panel absolute right-0 mt-3 w-52 rounded-2xl border border-white/60 py-2 z-50">
                       <Link to="/dashboard" className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50" onClick={() => setDropdownOpen(false)}>
                         <FiUser size={14} /> My Dashboard
                       </Link>
@@ -120,9 +142,6 @@ export default function Navbar() {
           )}
         </div>
       )}
-
-      {/* Close dropdown on outside click */}
-      {dropdownOpen && <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)} />}
     </nav>
   )
 }
