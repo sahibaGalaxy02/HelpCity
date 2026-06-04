@@ -1,7 +1,6 @@
 import React from 'react'
-import { MdOutlineRoad } from 'react-icons/md'
+import { FiAlertCircle, FiGrid, FiNavigation, FiZapOff } from 'react-icons/fi'
 import { FaTrash, FaBolt, FaTint } from 'react-icons/fa'
-import { FiAlertCircle, FiGrid } from 'react-icons/fi'
 
 export const getCategoryStyle = (category) => {
   const map = {
@@ -26,7 +25,7 @@ export const getStatusStyle = (status) => {
 
 export const getCategoryIcon = (category, size = 13) => {
   const map = {
-    Road: <MdOutlineRoad size={size} />,
+    Road: <FiNavigation size={size} />,
     Garbage: <FaTrash size={size - 2} />,
     Water: <FaTint size={size - 2} />,
     Electricity: <FaBolt size={size - 2} />,
