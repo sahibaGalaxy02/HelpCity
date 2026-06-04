@@ -1,3 +1,8 @@
+import React from 'react'
+import { MdOutlineRoad } from 'react-icons/md'
+import { FaTrash, FaBolt, FaTint } from 'react-icons/fa'
+import { FiAlertCircle, FiGrid } from 'react-icons/fi'
+
 export const getCategoryStyle = (category) => {
   const map = {
     Road: 'cat-road',
@@ -19,16 +24,18 @@ export const getStatusStyle = (status) => {
   return map[status] || 'status-pending'
 }
 
-export const getCategoryIcon = (category) => {
+export const getCategoryIcon = (category, size = 13) => {
   const map = {
-    Road: '🛣️',
-    Garbage: '🗑️',
-    Water: '💧',
-    Electricity: '⚡',
-    Other: '📋',
+    Road: <MdOutlineRoad size={size} />,
+    Garbage: <FaTrash size={size - 2} />,
+    Water: <FaTint size={size - 2} />,
+    Electricity: <FaBolt size={size - 2} />,
+    Other: <FiAlertCircle size={size} />,
   }
-  return map[category] || '📋'
+  return map[category] || <FiAlertCircle size={size} />
 }
+
+export const getCategoryIconAll = (size = 14) => <FiGrid size={size} />
 
 export const getStatusIcon = (status) => {
   const map = {
