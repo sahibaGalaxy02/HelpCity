@@ -210,7 +210,7 @@ export default function ReportIssuePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left column */}
           <div className="space-y-5">
-            {/* Category */}
+           {/* Category */}
             <div className="card p-5">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Category <span className="text-red-500">*</span>
@@ -221,13 +221,19 @@ export default function ReportIssuePage() {
                     key={cat}
                     type="button"
                     onClick={() => setForm(f => ({ ...f, category: cat }))}
-                    className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 text-xs font-medium transition-all ${
+                    className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 text-xs font-medium transition-all ${
                       form.category === cat
                         ? 'border-brand-500 bg-brand-50 text-brand-700'
                         : 'border-gray-100 hover:border-gray-200 text-gray-600'
                     }`}
                   >
-                    <span className="text-xl">{getCategoryIcon(cat)}</span>
+                    <span className={`p-2 rounded-lg ${
+                      form.category === cat
+                        ? 'bg-brand-100 text-brand-600'
+                        : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      {getCategoryIcon(cat, 18)}
+                    </span>
                     <span>{cat}</span>
                   </button>
                 ))}
