@@ -1,192 +1,307 @@
-# HelpCity
+# 🏙️ HelpCity — Civic Issue Reporting Platform
 
-![GitHub Stars](https://img.shields.io/github/stars/sahibaGalaxy02/HelpCity?style=flat-square&color=yellow)
-![GitHub Forks](https://img.shields.io/github/forks/sahibaGalaxy02/HelpCity?style=flat-square&color=blue)
-![License](https://img.shields.io/badge/License-Unspecified-lightgrey.svg)
+A full-stack MERN application that enables citizens to report civic issues (potholes, garbage overflow, broken streetlights, water leakage) and allows admins to manage and resolve them.
 
-HelpCity is a full-stack web application designed to help citizens report and track city-related issues efficiently. It provides a 
-platform where users can submit complaints, monitor their status, and improve communication between citizens and authorities.
+---
 
-## 🚀 Key Features
+## 🚀 Tech Stack
 
-*   **🔐 User Authentication**: Secure login and logout functionalities for citizens and potentially administrative users.
-*   **📝 Issue Reporting System**: An intuitive interface for users to submit new issues with relevant details.
-*   **🔄 Issue Status Tracking & Updates**: Citizens can track the progress of their reported issues, and authorities can update their status.
-*   **💻 Responsive User Interface**: A user-friendly design that works seamlessly across various devices.
-*   **⚡ Smooth Frontend-Backend Integration**: Efficient communication and data exchange between the client and server.
-*   **⚙️ Admin Dashboard**: (Inferred from `adminController.js`) Functionality for administrators to manage and filter reported issues.
-*   **☁️ Cloud-based File Uploads**: Integration with Cloudinary for handling image and media uploads related to issues.
-*   **🔥 Real-time Features (Possible)**: Firebase integration suggests potential for notifications or real-time updates.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React.js + Vite + Tailwind CSS |
+| State | Redux Toolkit |
+| Backend | Node.js + Express.js |
+| Database | MongoDB + Mongoose |
+| Auth | Firebase Phone OTP + JWT |
+| Images | Cloudinary |
+| Maps | Google Maps JavaScript API |
+| HTTP | Axios |
 
-## 🛠️ Tech Stack
+---
 
-### Frontend
-
-*   **Languages**: HTML, CSS, JavaScript.
-*   **Framework/Library**: React.js
-
-### Backend
-
-*   **Language**: JavaScript
-*   **Runtime**: Node.js
-*   **Framework**: Express.js
-*   **Database**: MongoDB (using Mongoose ODM)
-*   **File Storage**: Cloudinary
-*   **Real-time/Admin Utilities**: Firebase Admin SDK
-*   **File Upload Middleware**: Multer
-
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
-├── .gitignore
-├── README.md
-└── backend/
-    ├── config/
-    │   ├── cloudinary.js
-    │   ├── db.js
-    │   └── firebase.js
-    ├── controllers/
-    │   ├── adminController.js
-    │   ├── authController.js
-    │   └── issueController.js
-    ├── middleware/
-    │   ├── auth.js
-    │   └── validate.js
-    ├── models/
-    │   ├── Issue.js
-    │   └── User.js
-    ├── package-lock.json
-    ├── package.json
-    └── routes/
+helpcity/
+├── backend/
+│   ├── config/
+│   │   ├── cloudinary.js     # Cloudinary + Multer setup
+│   │   ├── db.js             # MongoDB connection
+│   │   └── firebase.js       # Firebase Admin SDK
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── issueController.js
+│   │   └── adminController.js
+│   ├── middleware/
+│   │   ├── auth.js           # JWT protect + adminOnly
+│   │   └── validate.js       # express-validator rules
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Issue.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── issues.js
+│   │   ├── admin.js
+│   │   └── upload.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env.example
+│
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── common/
+    │   │   │   └── IssueCard.jsx
+    │   │   └── layout/
+    │   │       ├── Layout.jsx
+    │   │       └── Navbar.jsx
+    │   ├── pages/
+    │   │   ├── LoginPage.jsx
+    │   │   ├── HomePage.jsx
+    │   │   ├── ReportIssuePage.jsx
+    │   │   ├── IssueDetailPage.jsx
+    │   │   ├── UserDashboard.jsx
+    │   │   ├── AdminDashboard.jsx
+    │   │   └── NotFoundPage.jsx
+    │   ├── redux/
+    │   │   ├── store.js
+    │   │   └── slices/
+    │   │       ├── authSlice.js
+    │   │       └── issuesSlice.js
+    │   ├── services/
+    │   │   ├── api.js          # Axios instance + API calls
+    │   │   └── firebase.js     # Firebase client setup
+    │   ├── utils/
+    │   │   └── helpers.js
+    │   ├── App.jsx
+    │   ├── main.jsx
+    │   └── index.css
+    ├── index.html
+    ├── vite.config.js
+    ├── tailwind.config.js
+    └── .env.example
 ```
 
-## ⚙️ Prerequisites
+---
 
-Before you begin, ensure you have the following installed:
+## ⚙️ Setup Instructions
 
-*   **Node.js**: [Download & Install Node.js](https://nodejs.org/en/download/) (which includes npm)
-*   **MongoDB**: A running MongoDB instance. You can set up a local instance or use a cloud service like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
-*   **Cloudinary Account**: A free account for image storage.
-*   **Firebase Project**: A Firebase project configured for admin SDK access.
+### Prerequisites
+- Node.js >= 18
+- MongoDB (local or Atlas)
+- Firebase project with Phone Authentication enabled
+- Cloudinary account
+- Google Cloud project with Maps JavaScript API + Geocoding API enabled
 
-## 🚀 Installation & Setup
+---
 
-Follow these steps to get HelpCity up and running on your local machine.
-
-### 1. Clone the Repository
+### 1. Clone & Install
 
 ```bash
-git clone https://github.com/sahibaGalaxy02/HelpCity.git
-cd HelpCity
+# Backend
+cd helpcity/backend
+npm install
+
+# Frontend
+cd ../frontend
+npm install
 ```
 
-### 2. Backend Setup
+---
 
-Navigate into the `backend` directory and install dependencies:
+### 2. Firebase Setup
+
+1. Go to [Firebase Console](https://console.firebase.google.com)
+2. Create a new project
+3. Enable **Authentication → Phone** sign-in method
+4. Go to **Project Settings → Your Apps → Add Web App** and copy the config for frontend
+5. Go to **Project Settings → Service Accounts → Generate new private key** for backend
+6. Add your domain (localhost) to Firebase **Authorized Domains**
+
+---
+
+### 3. Backend Environment Variables
+
+Copy `.env.example` to `.env` and fill in:
 
 ```bash
 cd backend
-npm install
+cp .env.example .env
 ```
 
-#### Environment Variables
-
-Create a `.env` file in the `backend` directory with the following variables:
-
-```
+```env
 PORT=5000
 NODE_ENV=development
 
-MONGO_URI=your_mongodb_connection_string # e.g., mongodb://localhost:27017/helpcity OR your_atlas_uri
+MONGO_URI=mongodb://localhost:27017/helpcity
 
-JWT_SECRET=your_jwt_secret_key # A strong, unique key for JWT
-JWT_EXPIRE=30d # e.g., 30d for 30 days
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
+JWT_EXPIRE=7d
 
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 
-FIREBASE_PROJECT_ID=your_firebase_project_id
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n" # Replace newline characters if storing as string
-FIREBASE_CLIENT_EMAIL=your_firebase_client_email
+FIREBASE_PROJECT_ID=your-firebase-project-id
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project.iam.gserviceaccount.com
+
+# Phone number that automatically gets admin role on first login
+ADMIN_PHONE=+919999999999
+
+FRONTEND_URL=http://localhost:5173
 ```
 
-**Note on `FIREBASE_PRIVATE_KEY`**: If copying directly from a JSON key file, ensure newline characters (`\n`) are correctly escaped or handled as shown.
+---
 
-### 3. Frontend Setup (Assumed)
-
-Although not explicitly in the provided `project structure`, the `README.md` snippet indicates a React.js frontend. If there is a `frontend` directory:
+### 4. Frontend Environment Variables
 
 ```bash
-cd ../frontend # Go back to root, then into frontend
-npm install
+cd frontend
+cp .env.example .env
 ```
 
-Create a `.env` file in the `frontend` directory for any client-side environment variables (e.g., `REACT_APP_API_URL=http://localhost:5000`).
+```env
+VITE_API_URL=http://localhost:5000/api
+VITE_FIREBASE_API_KEY=AIzaSy...
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_APP_ID=1:123456789:web:abcdef
+VITE_GOOGLE_MAPS_API_KEY=AIzaSy...
+```
 
-### 4. Run the Application
+---
 
-#### Start the Backend
+### 5. Run the App
 
-From the `backend` directory:
-
+**Backend:**
 ```bash
-npm start
-# Or for development with nodemon:
-npm run dev
+cd backend
+npm run dev      # Development with nodemon
+# or
+npm start        # Production
 ```
 
-The backend server should start, usually on `http://localhost:5000` (or your specified `PORT`). You should see messages like "✅ MongoDB Connected" and "✅ Firebase Admin initialized".
-
-#### Start the Frontend (Assumed)
-
-From the `frontend` directory:
-
+**Frontend:**
 ```bash
-npm start
+cd frontend
+npm run dev      # Development server at http://localhost:5173
+# or
+npm run build    # Production build
+npm run preview  # Preview production build
 ```
 
-This will typically open the application in your browser at `http://localhost:3000`.
+---
 
-## 📖 Usage
+## 🔑 API Reference
 
-### For Citizens
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/login` | Login/register with Firebase ID token |
+| GET | `/api/auth/me` | Get current user profile |
+| PUT | `/api/auth/profile` | Update profile name |
 
-1.  **Register/Login**: Create a new account or log in using your existing credentials.
-2.  **Report an Issue**: Navigate to the "Report Issue" section, fill in the details (category, description, location), and optionally upload supporting images.
-3.  **Track Issues**: View a list of your reported issues and monitor their current status (e.g., "Pending", "In Progress", "Resolved").
+### Issues
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/issues` | Get all issues (filters: category, status, sort, page) | Public |
+| POST | `/api/issues` | Create new issue (multipart/form-data) | Required |
+| GET | `/api/issues/my` | Get current user's issues | Required |
+| GET | `/api/issues/:id` | Get single issue | Public |
+| PUT | `/api/issues/:id` | Update own issue | Required |
+| DELETE | `/api/issues/:id` | Delete own issue | Required |
+| POST | `/api/issues/:id/upvote` | Toggle upvote | Required |
 
-### For Administrators
+### Admin
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/admin/stats` | Dashboard statistics | Admin |
+| GET | `/api/admin/issues` | All issues with filters | Admin |
+| PUT | `/api/admin/status/:id` | Update status/department/notes | Admin |
+| DELETE | `/api/admin/issues/:id` | Delete any issue | Admin |
+| GET | `/api/admin/users` | List all citizens | Admin |
 
-1.  **Login**: Access the admin panel with designated admin credentials.
-2.  **Manage Issues**: View all reported issues, filter them by category or status, and update their status.
-3.  **User Management**: (Potential) Manage user accounts if such functionality is implemented in `adminController`.
+---
+
+## 🛡️ Security Features
+
+- **JWT Authentication** — Stateless token-based auth, 7-day expiry
+- **Firebase Phone OTP** — Secure phone verification with reCAPTCHA
+- **Rate Limiting** — 100 req/15min globally; 20 req/hour for auth routes
+- **Helmet.js** — Secure HTTP headers
+- **Input Validation** — express-validator on all POST/PUT routes
+- **CORS** — Configured to allow only your frontend URL
+- **Image Validation** — Multer restricts to images < 5MB
+- **Role-based Access** — Citizen vs Admin middleware guards
+
+---
+
+## 🚀 Deployment
+
+### Backend (Railway / Render / DigitalOcean)
+1. Set all environment variables in your hosting platform
+2. Build command: `npm install`
+3. Start command: `npm start`
+
+### Frontend (Vercel / Netlify)
+1. Set all `VITE_*` environment variables
+2. Build command: `npm run build`
+3. Output directory: `dist`
+4. Add a `vercel.json` for SPA routing:
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+### MongoDB Atlas
+- Use a free M0 cluster
+- Whitelist `0.0.0.0/0` for cloud deployments
+- Update `MONGO_URI` to your Atlas connection string
+
+---
+
+## 🔧 Making a User an Admin
+
+Option 1: Set `ADMIN_PHONE=+91XXXXXXXXXX` in backend `.env` before that user first logs in.
+
+Option 2: Manually update in MongoDB:
+```javascript
+db.users.updateOne({ phone: "+91XXXXXXXXXX" }, { $set: { role: "admin" } })
+```
+
+---
+
+## 📱 Features
+
+### Citizen Side
+- 📱 Phone OTP login via Firebase
+- 📝 Report issues with title, description, category, photo
+- 📍 Auto-detect location with Google Maps
+- 🗳️ Upvote issues to show community support
+- 📋 View issue feed with filters
+- 👤 Personal dashboard with issue tracking
+
+### Admin Side
+- 📊 Dashboard with statistics (total, by status, by category)
+- 🔍 Search and filter all issues
+- ✏️ Update issue status (Pending → In Progress → Resolved / Rejected)
+- 🏢 Assign to department
+- 📝 Add admin notes visible to reporter
+- 🗑️ Delete spam issues
+
+---
 
 ## 🤝 Contributing
 
-We welcome contributions to HelpCity! If you have suggestions for improvements or new features, please follow these steps:
+1. Fork the repository
+2. Create a feature branch
+3. Commit changes with descriptive messages
+4. Open a pull request
 
-1.  **Fork** the repository.
-2.  **Create** a new branch (`git checkout -b feature/YourFeature`).
-3.  **Implement** your changes.
-4.  **Commit** your changes (`git commit -m 'Add some feature'`).
-5.  **Push** to the branch (`git push origin feature/YourFeature`).
-6.  **Open** a Pull Request.
-
-Please ensure your code adheres to the existing style and conventions.
+---
 
 ## 📄 License
 
-This project is currently **Unspecified**. More details regarding the licensing terms will be provided soon.
-
-## 🙏 Acknowledgments
-
-*   [Node.js](https://nodejs.org/)
-*   [React](https://react.dev/)
-*   [Express](https://expressjs.com/)
-*   [MongoDB](https://www.mongodb.com/)
-*   [Mongoose](https://mongoosejs.com/)
-*   [Cloudinary](https://cloudinary.com/)
-*   [Firebase](https://firebase.google.com/)
-*   [Multer](https://www.npmjs.com/package/multer)
-*   And all the open-source libraries that make this project possible!
+MIT License — free for personal and commercial use.
