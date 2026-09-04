@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { adminAPI } from '../services/api'
 import { CATEGORIES, STATUSES, DEPARTMENTS, getCategoryIcon, getCategoryStyle, getStatusStyle, formatDateTime } from '../utils/helpers'
-import { FiFilter, FiSearch, FiTrash2, FiEdit3, FiCheck, FiX, FiUsers, FiAlertCircle, FiRefreshCw, FiExternalLink } from 'react-icons/fi'
-
+import { FiFilter, FiSearch, FiTrash2, FiEdit3, FiCheck, FiX, FiAlertCircle, FiRefreshCw, FiExternalLink, FiList, FiClock, FiTool, FiCheckCircle } from 'react-icons/fi'
 export default function AdminDashboard() {
   const { user } = useSelector(s => s.auth)
   const [issues, setIssues] = useState([])
@@ -95,22 +94,22 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stats row */}
-      {stats && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-          {[
-            { label: 'Total Issues', value: stats.total, icon: '📋', color: 'bg-gray-50' },
-            { label: 'Pending', value: stats.byStatus?.Pending || 0, icon: '🕐', color: 'bg-amber-50' },
-            { label: 'In Progress', value: stats.byStatus?.['In Progress'] || 0, icon: '🔧', color: 'bg-blue-50' },
-            { label: 'Resolved', value: stats.byStatus?.Resolved || 0, icon: '✅', color: 'bg-green-50' },
-          ].map(s => (
-            <div key={s.label} className={`${s.color} rounded-2xl p-4 border border-gray-100`}>
-              <div className="text-2xl mb-1">{s.icon}</div>
-              <div className="font-display font-bold text-2xl text-gray-900">{s.value}</div>
-              <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      )}
+{stats && (
+  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+    {[
+      { label: 'Total Issues', value: stats.total, icon: <FiList size={20} />, color: 'bg-gray-50', iconColor: 'text-gray-500' },
+      { label: 'Pending', value: stats.byStatus?.Pending || 0, icon: <FiClock size={20} />, color: 'bg-amber-50', iconColor: 'text-amber-500' },
+      { label: 'In Progress', value: stats.byStatus?.['In Progress'] || 0, icon: <FiTool size={20} />, color: 'bg-blue-50', iconColor: 'text-blue-500' },
+      { label: 'Resolved', value: stats.byStatus?.Resolved || 0, icon: <FiCheckCircle size={20} />, color: 'bg-green-50', iconColor: 'text-green-500' },
+    ].map(s => (
+      <div key={s.label} className={`${s.color} rounded-2xl p-4 border border-gray-100`}>
+        <div className={`${s.iconColor} mb-2`}>{s.icon}</div>
+        <div className="font-display font-bold text-2xl text-gray-900">{s.value}</div>
+        <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
+      </div>
+    ))}
+  </div>
+)}
 
       {/* Filters */}
       <div className="card p-4 mb-5">
